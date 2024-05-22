@@ -39,7 +39,7 @@
 Summary: Low-level DNS(SEC) library with API
 Name: ldns
 Version: 1.7.0
-Release: 21%{?dist}
+Release: 22%{?dist}
 
 License: BSD
 Url: http://www.nlnetlabs.nl/%{name}/
@@ -355,6 +355,9 @@ rm -rf doc/man
 %doc doc
 
 %changelog
+* Tue Jan 16 2024 Petr Menšík <pemensik@redhat.com> - 1.7.0-22
+- Export ldns-utils, ldns-doc, perl-ldns and python3-ldns into CRB (RHEL-315)
+
 * Tue Jul 23 2019 Martin Osvald <mosvald@redhat.com> - 1.7.0-21
 - Fix for issues found by covscan (#1602571)
 
