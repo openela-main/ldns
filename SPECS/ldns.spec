@@ -39,7 +39,7 @@
 Summary: Low-level DNS(SEC) library with API
 Name: ldns
 Version: 1.7.1
-Release: 11%{?dist}
+Release: 12%{?dist}
 
 License: BSD
 Url: https://www.nlnetlabs.nl/%{name}/
@@ -191,8 +191,8 @@ cp -a %{pkgname}_python3 %{pkgname}_python2
 
 
 %build
-CFLAGS="%{optflags} -fPIC"
-CXXFLAGS="%{optflags} -fPIC"
+CFLAGS="%{optflags} -fPIC -fno-strict-aliasing"
+CXXFLAGS="%{optflags} -fPIC -fno-strict-aliasing"
 LDFLAGS="$RPM_LD_FLAGS -Wl,-z,now -pie"
 export CFLAGS CXXFLAGS LDFLAGS
 
@@ -359,6 +359,9 @@ rm -rf doc/man
 %doc doc
 
 %changelog
+* Tue Dec 03 2024 Petr Menšík <pemensik@redhat.com> - 1.7.1-12
+- Fix digest calculation of sha256 (RHEL-20391)
+
 * Wed Jul  6 2022 Joe Orton <jorton@redhat.com> - 1.7.1-11
 - rebuild (#2080206)
 
