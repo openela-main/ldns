@@ -1,0 +1,26 @@
+32-bit compatibility for Python SWIG bindings
+
+The ssize_t type can be int instead of long, and the pointer types are
+incompatible.
+
+Submitted upstream: <https://github.com/NLnetLabs/ldns/pull/233>
+
+diff -ur ldns-1.8.3.orig/ldns-1.8.3/contrib/python/ldns.i ldns-1.8.3/ldns-1.8.3/contrib/python/ldns.i
+--- ldns-1.8.3.orig/ldns-1.8.3/contrib/python/ldns.i	2022-08-15 12:38:22.000000000 +0200
++++ ldns-1.8.3/ldns-1.8.3/contrib/python/ldns.i	2024-01-26 11:46:55.329133288 +0100
+@@ -99,12 +99,14 @@
+ %typemap(in, noblock=1) (ssize_t)
+ {
+   int $1_res = 0;
+-  $1_res = SWIG_AsVal_long($input, &$1);
++  long val;
++  $1_res = SWIG_AsVal_long($input, &val);
+   if (!SWIG_IsOK($1_res)) {
+     SWIG_exception_fail(SWIG_ArgError($1_res), "in method '"
+       "$symname" "', argument " "$argnum" " of type '"
+       "$type""'");
+   }
++  $1 = val;
+ }
+ 
+ 

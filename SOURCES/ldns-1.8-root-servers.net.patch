@@ -1,0 +1,70 @@
+From e780aecd574400233c0dd35424dade90b5d4cbf1 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20Men=C5=A1=C3=ADk?= <pemensik@redhat.com>
+Date: Thu, 4 Jan 2024 10:02:11 +0100
+Subject: [PATCH] Update address of b.root-servers.net and some others
+
+Update recently changed root servers address in the drill tool. Update
+also other addresses and expand IPv6 addresses.
+---
+ ldns-1.8.3/drill/root.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/ldns-1.8.3/drill/root.c b/ldns-1.8.3/drill/root.c
+index a829935..8705094 100644
+--- a/ldns-1.8.3/drill/root.c
++++ b/ldns-1.8.3/drill/root.c
+@@ -28,26 +28,38 @@ init_root(void)
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "A.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:BA3E::2:30", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+-	(void)ldns_rr_new_frm_str(&r, "B.ROOT-SERVERS.NET.      3600000      A     192.228.79.201", 0, NULL, NULL);
++	(void)ldns_rr_new_frm_str(&r, "B.ROOT-SERVERS.NET.      3600000      A     170.247.170.2", 0, NULL, NULL);
++	ldns_rr_list_push_rr(global_dns_root, r);
++	(void)ldns_rr_new_frm_str(&r, "B.ROOT-SERVERS.NET.      3600000      AAAA  2801:1b8:10::B", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "C.ROOT-SERVERS.NET.      3600000      A     192.33.4.12", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+-	(void)ldns_rr_new_frm_str(&r, "D.ROOT-SERVERS.NET.      3600000      A     128.8.10.90", 0, NULL, NULL);
++	(void)ldns_rr_new_frm_str(&r, "C.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2::C", 0, NULL, NULL);
++	ldns_rr_list_push_rr(global_dns_root, r);
++	(void)ldns_rr_new_frm_str(&r, "D.ROOT-SERVERS.NET.      3600000      A     199.7.91.13", 0, NULL, NULL);
++	ldns_rr_list_push_rr(global_dns_root, r);
++	(void)ldns_rr_new_frm_str(&r, "D.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2D::D", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "E.ROOT-SERVERS.NET.      3600000      A     192.203.230.10", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
++	(void)ldns_rr_new_frm_str(&r, "E.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:A8::E", 0, NULL, NULL);
++	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "F.ROOT-SERVERS.NET.      3600000      A     192.5.5.241", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "F.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2F::F", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "G.ROOT-SERVERS.NET.      3600000      A     192.112.36.4", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+-	(void)ldns_rr_new_frm_str(&r, "H.ROOT-SERVERS.NET.      3600000      A     128.63.2.53", 0, NULL, NULL);
++	(void)ldns_rr_new_frm_str(&r, "G.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:12::D0D", 0, NULL, NULL);
++	ldns_rr_list_push_rr(global_dns_root, r);
++	(void)ldns_rr_new_frm_str(&r, "H.ROOT-SERVERS.NET.      3600000      A     198.97.190.53", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+-	(void)ldns_rr_new_frm_str(&r, "H.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:1::803F:235", 0, NULL, NULL);
++	(void)ldns_rr_new_frm_str(&r, "H.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:1::53", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "I.ROOT-SERVERS.NET.      3600000      A     192.36.148.17", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
++	(void)ldns_rr_new_frm_str(&r, "I.ROOT-SERVERS.NET.      3600000      AAAA  2001:7FE::53", 0, NULL, NULL);
++	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "J.ROOT-SERVERS.NET.      3600000      A     192.58.128.30", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "J.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:C27::2:30", 0, NULL, NULL);
+@@ -58,7 +70,7 @@ init_root(void)
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "L.ROOT-SERVERS.NET.      3600000      A     199.7.83.42", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+-	(void)ldns_rr_new_frm_str(&r, "L.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:3::42   ", 0, NULL, NULL);
++	(void)ldns_rr_new_frm_str(&r, "L.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:9F::42", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+ 	(void)ldns_rr_new_frm_str(&r, "M.ROOT-SERVERS.NET.      3600000      A     202.12.27.33", 0, NULL, NULL);
+ 	ldns_rr_list_push_rr(global_dns_root, r);
+-- 
+2.43.0
+

@@ -1,0 +1,116 @@
+From 4a74281b387c9fe8f0c22a3698f27ac27e03887b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20Men=C5=A1=C3=ADk?= <pemensik@redhat.com>
+Date: Wed, 23 Oct 2024 23:08:54 +0200
+Subject: [PATCH] Use SWIG_AppendOutput to support swig 4.3
+
+Swig has changed language specific AppendOutput functions. But helper
+macro SWIG_AppendOutput remains unchanged. Use that everywhere instead
+of SWIG_Python_AppendOutput, which would require one extra parameter
+since swig 4.3.0.
+
+https://github.com/swig/swig/blob/v4.3.0/CHANGES.current#L376
+https://github.com/swig/swig/issues/2905
+---
+ ldns-1.8.3/contrib/python/ldns_buffer.i   | 2 +-
+ ldns-1.8.3/contrib/python/ldns_key.i      | 2 +-
+ ldns-1.8.3/contrib/python/ldns_packet.i   | 2 +-
+ ldns-1.8.3/contrib/python/ldns_rdf.i      | 2 +-
+ ldns-1.8.3/contrib/python/ldns_resolver.i | 2 +-
+ ldns-1.8.3/contrib/python/ldns_rr.i       | 2 +-
+ ldns-1.8.3/contrib/python/ldns_zone.i     | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/ldns-1.8.3/contrib/python/ldns_buffer.i b/ldns-1.8.3/contrib/python/ldns_buffer.i
+index 5c2d583..0a3e389 100644
+--- a/ldns-1.8.3/contrib/python/ldns_buffer.i
++++ b/ldns-1.8.3/contrib/python/ldns_buffer.i
+@@ -45,7 +45,7 @@
+ /* Result generation, appends (ldns_buffer *) after the result. */
+ %typemap(argout, noblock=1) (ldns_buffer **)
+ {
+-  $result = SWIG_Python_AppendOutput($result,
++  $result = SWIG_AppendOutput($result,
+      SWIG_NewPointerObj(SWIG_as_voidptr($1_buf),
+        SWIGTYPE_p_ldns_struct_buffer, SWIG_POINTER_OWN | 0));
+ }
+diff --git a/ldns-1.8.3/contrib/python/ldns_key.i b/ldns-1.8.3/contrib/python/ldns_key.i
+index dc67e67..6a3c2db 100644
+--- a/ldns-1.8.3/contrib/python/ldns_key.i
++++ b/ldns-1.8.3/contrib/python/ldns_key.i
+@@ -38,7 +38,7 @@
+ /* result generation */
+ %typemap(argout,noblock=1) (ldns_key **)
+ {
+-  $result = SWIG_Python_AppendOutput($result, SWIG_NewPointerObj(SWIG_as_voidptr($1_key), SWIGTYPE_p_ldns_struct_key, SWIG_POINTER_OWN |  0 ));
++  $result = SWIG_AppendOutput($result, SWIG_NewPointerObj(SWIG_as_voidptr($1_key), SWIGTYPE_p_ldns_struct_key, SWIG_POINTER_OWN |  0 ));
+ }
+ 
+ %typemap(argout) ldns_rdf *r "Py_INCREF($input);"
+diff --git a/ldns-1.8.3/contrib/python/ldns_packet.i b/ldns-1.8.3/contrib/python/ldns_packet.i
+index c2d7a3b..8309808 100644
+--- a/ldns-1.8.3/contrib/python/ldns_packet.i
++++ b/ldns-1.8.3/contrib/python/ldns_packet.i
+@@ -45,7 +45,7 @@
+ /* Result generation, appends (ldns_pkt *) after the result. */
+ %typemap(argout,noblock=1) (ldns_pkt **)
+ {
+-  $result = SWIG_Python_AppendOutput($result,
++  $result = SWIG_AppendOutput($result,
+     SWIG_NewPointerObj(SWIG_as_voidptr($1_pkt),
+       SWIGTYPE_p_ldns_struct_pkt, SWIG_POINTER_OWN |  0 ));
+ }
+diff --git a/ldns-1.8.3/contrib/python/ldns_rdf.i b/ldns-1.8.3/contrib/python/ldns_rdf.i
+index 60daf1a..c2e143a 100644
+--- a/ldns-1.8.3/contrib/python/ldns_rdf.i
++++ b/ldns-1.8.3/contrib/python/ldns_rdf.i
+@@ -45,7 +45,7 @@
+ /* Result generation, appends (ldns_rdf *) after the result. */
+ %typemap(argout, noblock=1) (ldns_rdf **)
+ {
+-  $result = SWIG_Python_AppendOutput($result,
++  $result = SWIG_AppendOutput($result,
+     SWIG_NewPointerObj(SWIG_as_voidptr($1_rdf),
+       SWIGTYPE_p_ldns_struct_rdf, SWIG_POINTER_OWN | 0));
+ }
+diff --git a/ldns-1.8.3/contrib/python/ldns_resolver.i b/ldns-1.8.3/contrib/python/ldns_resolver.i
+index 8468cce..8d0abc6 100644
+--- a/ldns-1.8.3/contrib/python/ldns_resolver.i
++++ b/ldns-1.8.3/contrib/python/ldns_resolver.i
+@@ -45,7 +45,7 @@
+ /* Result generation, appends (ldns_resolver *) after the result. */
+ %typemap(argout,noblock=1) (ldns_resolver **r)
+ {
+-  $result = SWIG_Python_AppendOutput($result,
++  $result = SWIG_AppendOutput($result,
+     SWIG_NewPointerObj(SWIG_as_voidptr($1_res),
+       SWIGTYPE_p_ldns_struct_resolver, SWIG_POINTER_OWN |  0 ));
+ }
+diff --git a/ldns-1.8.3/contrib/python/ldns_rr.i b/ldns-1.8.3/contrib/python/ldns_rr.i
+index 2e0a071..c53955c 100644
+--- a/ldns-1.8.3/contrib/python/ldns_rr.i
++++ b/ldns-1.8.3/contrib/python/ldns_rr.i
+@@ -45,7 +45,7 @@
+ /* Result generation, appends (ldns_rr *) after the result. */
+ %typemap(argout, noblock=1) (ldns_rr **) 
+ {
+-  $result = SWIG_Python_AppendOutput($result,
++  $result = SWIG_AppendOutput($result,
+     SWIG_NewPointerObj(SWIG_as_voidptr($1_rr),
+       SWIGTYPE_p_ldns_struct_rr, SWIG_POINTER_OWN |  0 ));
+ }
+diff --git a/ldns-1.8.3/contrib/python/ldns_zone.i b/ldns-1.8.3/contrib/python/ldns_zone.i
+index bbb8d8f..3459478 100644
+--- a/ldns-1.8.3/contrib/python/ldns_zone.i
++++ b/ldns-1.8.3/contrib/python/ldns_zone.i
+@@ -39,7 +39,7 @@
+ /* result generation */
+ %typemap(argout,noblock=1) (ldns_zone **)
+ {
+- $result = SWIG_Python_AppendOutput($result, SWIG_NewPointerObj(SWIG_as_voidptr($1_zone), SWIGTYPE_p_ldns_struct_zone, SWIG_POINTER_OWN |  0 ));
++ $result = SWIG_AppendOutput($result, SWIG_NewPointerObj(SWIG_as_voidptr($1_zone), SWIGTYPE_p_ldns_struct_zone, SWIG_POINTER_OWN |  0 ));
+ }
+ 
+ %nodefaultctor ldns_struct_zone; //no default constructor & destructor
+-- 
+2.47.0
+
