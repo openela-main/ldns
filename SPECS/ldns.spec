@@ -39,7 +39,7 @@
 Summary: Low-level DNS(SEC) library with API
 Name: ldns
 Version: 1.7.0
-Release: 22%{?dist}
+Release: 23%{?dist}
 
 License: BSD
 Url: http://www.nlnetlabs.nl/%{name}/
@@ -48,6 +48,8 @@ Patch1: ldns-1.7.0-multilib.patch
 Patch2: ldns-1.7.0-parse-limit.patch
 Patch3: ldns-1.7.0-realloc.patch
 Patch4: ldns-1.7.0-coverity.patch
+# https://src.fedoraproject.org/rpms/ldns/raw/rawhide/f/ldns-1.9.0-CVE-2026-10846.patch
+Patch5: ldns-1.7.0-CVE-2026-10846.patch
 
 Group: System Environment/Libraries
 # Only needed for builds from svn snapshot
@@ -160,6 +162,7 @@ pushd %{pkgname}
 %patch2 -p1 -b .limit
 %patch3 -p1 -b .realloc
 %patch4 -p1 -b .covscan
+%patch5 -p2 -b .cve-2026-10846
 # To built svn snapshots
 %if 0%{snapshot}
   rm config.guess config.sub ltmain.sh
@@ -355,6 +358,11 @@ rm -rf doc/man
 %doc doc
 
 %changelog
+* Wed Jul 15 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.7.0-23
+- Fix CVE-2026-10846: validate DNS response source address, transaction
+  ID, and query section matching
+- Resolves: RHEL-210700
+
 * Tue Jan 16 2024 Petr Menšík <pemensik@redhat.com> - 1.7.0-22
 - Export ldns-utils, ldns-doc, perl-ldns and python3-ldns into CRB (RHEL-315)
 
