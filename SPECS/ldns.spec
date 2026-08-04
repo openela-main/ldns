@@ -39,7 +39,7 @@
 Summary: Low-level DNS(SEC) library with API
 Name: ldns
 Version: 1.7.1
-Release: 12%{?dist}
+Release: 12%{?dist}.1
 
 License: BSD
 Url: https://www.nlnetlabs.nl/%{name}/
@@ -57,6 +57,9 @@ Patch3: ldns-1.7.1-out-of-boud-read-vuln.patch
 Patch4: ldns-1.7.1-Support-sysconfig-python-module-in-python_devel.patch
 # https://github.com/NLnetLabs/ldns/commit/a5a5dd867fdb934a7ce3637dd9def598f0979247
 Patch5: ldns-1.7.1-Use-PYTHON_LIBS-instead-of-PYTHON_LDFLAGS.patch
+# https://issues.redhat.com/browse/RHEL-210701
+# https://nlnetlabs.nl/downloads/ldns/patch_cve_2026-10846.diff
+Patch6: ldns-1.7.1-CVE-2026-10846.patch
 
 
 # Only needed for builds from svn snapshot
@@ -359,6 +362,10 @@ rm -rf doc/man
 %doc doc
 
 %changelog
+* Fri Jul 17 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.7.1-12.1
+- Fix CVE-2026-10846: DNS response spoofing via missing
+  address/port/TXID and question section validation (RHEL-210701)
+
 * Tue Dec 03 2024 Petr Menšík <pemensik@redhat.com> - 1.7.1-12
 - Fix digest calculation of sha256 (RHEL-20391)
 
