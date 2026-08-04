@@ -37,7 +37,7 @@
 Summary: Low-level DNS(SEC) library with API
 Name: ldns
 Version: 1.8.3
-Release: 18%{?dist}
+Release: 18%{?dist}.1
 
 License: BSD-3-Clause
 Url: https://www.nlnetlabs.nl/%{name}/
@@ -60,6 +60,8 @@ Patch6: ldns-1.8-openssl-engine.patch
 # https://github.com/NLnetLabs/ldns/pull/256
 # https://github.com/NLnetLabs/ldns/pull/257
 Patch7: ldns-1.8.3-swig-4.3.patch
+# https://nlnetlabs.nl/downloads/ldns/patch_cve_2026-10846.diff
+Patch8: ldns-1.8.3-CVE-2026-10846.patch
 
 BuildRequires: libtool
 BuildRequires: autoconf
@@ -367,6 +369,10 @@ rm -rf doc/man
 %doc doc
 
 %changelog
+* Fri Jul 17 2026 Fedor Vorobev <fvorobev@redhat.com> - 1.8.3-18.1
+- Fix CVE-2026-10846: Off-path poisoning attacks due to insufficient
+  query-response matching (RHEL-210690)
+
 * Tue Oct 29 2024 Jitka Plesnikova <jplesnik@redhat.com> - 1.8.3-18
 - Fix for SWIG 4.3.0
 
